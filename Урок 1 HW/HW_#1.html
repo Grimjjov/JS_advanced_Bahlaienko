@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework#1</title>
+    <style>
+      body {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+      }
+      select {
+        list-style: none;
+        border: 3px solid red;
+        width: 500px;
+        padding: 15px 0;
+        margin: 0 auto;
+        text-align: center;
+        margin-bottom: 100px;
+        max-height: 35vh;
+        overflow: auto;
+        flex: 1 0 500px;
+        pointer-events: none;
+        text-transform: uppercase;
+      }
+      select option {
+        padding: 5px 0;
+        font-size: 16px;
+      }
+      form {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+      }
+      form input {
+        padding: 5px;
+        margin: 10px;
+      }
+      form p {
+        text-align: center;
+        padding-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myForm">
+      <select id="mySel" size="10">
+        <option>Пример №1</option>
+        <option>Пример №2</option>
+        <option>Пример №3</option>
+      </select>
+      <p>Введите текст что бы добавить его в список</p>
+      <input
+        id="myInput"
+        type="text"
+        name="inputText"
+        placeholder="Введите текст"
+        size="30"
+      />
+      <input
+        type="button"
+        value="Выбрать перый элемент"
+        onclick="selectFirstItem()"
+      />
+      <input
+        type="button"
+        value="Выбрать последний элемент"
+        onclick="selectLastItem()"
+      />
+      <input
+        type="button"
+        value="Выбрать следующий элемент"
+        onclick="selectNextItem()"
+      />
+      <input
+        type="button"
+        value="Выбрать предыдуий элемент"
+        onclick="selectPreviousItem()"
+      />
+      <input
+        type="button"
+        value="Добавить элемент в конец списка"
+        onclick="addEletment(this.form)"
+      />
+      <input type="button" value="Удалить элемент" onclick="delEletment()" />
+      <input
+        type="button"
+        value="Добавить в начало списка"
+        onclick="addEletmentToStart(this.form)"
+      />
+    </form>
+
+    <script>
+      //  Функция для добавления элемента <addEletment>
+      $("#mySel").click(false);
+
+      function addEletment(form) {
+        if (form.inputText.value) {
+          let newItem = document.createElement("option");
+          newItem.innerHTML = form.inputText.value;
+          document.getElementById("mySel").appendChild(newItem);
+          form.inputText.value = "";
+        }
+      }
+
+      // Функция для добавления элемента в начало
+      function addEletmentToStart(form) {
+        if (form.inputText.value) {
+          let firstItem = document.querySelector("#mySel").firstElementChild;
+          let newItem = document.createElement("option");
+          newItem.innerHTML = form.inputText.value;
+          document.getElementById("mySel").insertBefore(newItem, firstItem);
+          form.inputText.value = "";
+        }
+      }
+
+      //Функция выбора первого элемента
+      function selectFirstItem() {
+        let firstItem = document.querySelector("#mySel").firstElementChild;
+        let selectedItem = document.querySelector("#mySel>option[selected]");
+        if (selectedItem) {
+          selectedItem.removeAttribute("selected");
+        }
+        firstItem.setAttribute("selected", "selected");
+      }
+      // Выбрать последний элемент
+      function selectLastItem() {
+        let lastItem = document.querySelector("#mySel").lastElementChild;
+        let selectedItem = document.querySelector("#mySel>option[selected]");
+        if (selectedItem) {
+          selectedItem.removeAttribute("selected");
+        }
+        lastItem.setAttribute("selected", "selected");
+      }
+
+      //Функция выбрать следующий элемент
+      function selectNextItem() {
+        let selectedItem = document.querySelector("#mySel>option[selected]"); //выбраный тег с selected
+        let firstItem = document.querySelector("#mySel").firstElementChild; //первый тег
+        let lastItem = document.querySelector("#mySel").lastElementChild;
+
+        //если у последнего элемента есть selected то идет дальше
+        if (
+          (firstItem.matches("[selected]") || selectedItem) &&
+          lastItem.matches("[selected]")
+        ) {
+          firstItem.setAttribute("selected", "selected");
+          selectedItem.removeAttribute("selected");
+        }
+        //если у первого элемента есть selected то идет дальше
+        else if (firstItem.matches("[selected]") || selectedItem) {
+          selectedItem.removeAttribute("selected");
+          selectedItem.nextElementSibling.setAttribute("selected", "selected"); //Потестить
+        }
+        //если елемент не выбран
+        else if (!selectedItem) {
+          firstItem.setAttribute("selected", "selected");
+        }
+      }
+      //Функция выбрать предыдущий элемент
+      function selectPreviousItem() {
+        let selectedItem = document.querySelector("#mySel>option[selected]"); //выбраный тег с selected
+        let firstItem = document.querySelector("#mySel").firstElementChild; //первый тег
+        let lastItem = document.querySelector("#mySel").lastElementChild;
+
+        //если у первого элемента есть selected то идет дальше
+        if (
+          (lastItem.matches("[selected]") || selectedItem) &&
+          firstItem.matches("[selected]")
+        ) {
+          lastItem.setAttribute("selected", "selected");
+          selectedItem.removeAttribute("selected");
+        }
+        //если у первого элемента есть selected то идет дальше
+        else if (firstItem.matches("[selected]") || selectedItem) {
+          selectedItem.removeAttribute("selected");
+          if (!selectedItem == lastItem.hasAttribute("selected")) {
+            selectedItem.previousElementSibling.setAttribute(
+              "selected",
+              "selected"
+            ); //Потестить
+          }
+
+          //если елемент не выбран
+        } else if (!selectedItem) {
+          lastItem.setAttribute("selected", "selected");
+        }
+      }
+
+      // Функия удаление элемента <delEletment>
+      function delEletment() {
+        let selectedItem = document.querySelector("#mySel>option[selected]"); //выбраный тег с selected
+        if (selectedItem) {
+          document.querySelector("#mySel").removeChild(selectedItem);
+        }
+      }
+    </script>
+  </body>
+</html>
