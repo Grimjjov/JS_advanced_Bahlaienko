@@ -1,0 +1,70 @@
+<!-- Доработайте пример, 005_thisExample.html, при наведении мыши к одному из блоков, 
+    цвет блока должен измениться, на уникальный, такой которого еще нету у существующих блоков.
+Также выведите в блок текстовое оповещение о информации цвета, 
+который используется для фона данного блока.
+При попытке закрыть вкладку, придупредите пользователя о том что информация будет утеряна.
+ Используйте window.onload.  -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HW-2</title>
+    <title>События мыши</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      div {
+        background-color: green;
+        display: flex;
+        height: 100px;
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script>
+      let divArr = document.getElementsByTagName("div");
+      let COLORS = [];
+      let randInt;
+
+      while (COLORS.length < 100) {
+        COLORS.push(`rgb(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)})`);
+      }
+      function rand(frm, to) {
+        return ~~(Math.random() * (to - frm)) + frm;
+      }
+
+      for (var i = 0; i < divArr.length; i++) {
+        divArr[i].onmouseover = function () {
+          function getRandomInt() {
+            return Math.floor(Math.random() * 100);
+          }
+          randNum = getRandomInt();
+
+          this.style.backgroundColor = COLORS[randNum];
+          this.innerHTML = COLORS[randNum];
+        };
+      }
+
+      //   window.onunload = function(){
+      //     alert("Данные не сохранены. Точно перейти?")
+      //   }
+    </script>
+  </body>
+</html>

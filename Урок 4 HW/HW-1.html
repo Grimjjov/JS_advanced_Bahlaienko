@@ -1,0 +1,52 @@
+<!-- Напишите регулярные выражения, которые будут выбирать 
+    индекс - 55535 - 5 numbers
+    ip адресс, пример 255.255.255.255
+    цены в долларах - $0.84, $1232.84, $4
+    дата в виде - 30/12/2016 - день, месяц, год
+ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HW-1</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function findNumbers() {
+        let myStr =
+          "Lorem ipsum dolor sit amet  55553 consectetur 555adipisicing elit. 23 Fuga deserunt 48961 rerum atque vero soluta error illo, mollitia hic necessitatibus harum 33125 ipsam veniam! Placeat cumque tempore voluptatibus velit quo quasi dolores.";
+        let reg = /\d{5}/g;
+        let result = myStr.match(reg);
+        console.log(result);
+      }
+      findNumbers();
+
+      function findIp() {
+        let myStr =
+          "Lorem ipsum dolor sit amet  192.168.1.1 consectetur adipisicing elit. 255.255.255.2545 Fuga deserunt 255.255.255.255 rerum atque vero soluta error illo, mollitia hic necessitatibus harum 255.255.255.255 ipsam veniam! Placeat cumque tempore voluptatibus velit quo quasi dolores.";
+        let reg = /\d{3}\.\d{3}\.\d{1,3}\.\d{1,3}/g;
+        let result = myStr.match(reg);
+        console.log(result);
+      }
+      findIp();
+
+      function findPrice() {
+        let myStr =
+          "Lorem ipsum dolor sit amet  $0.84 consectetur 555adipisicing elit. $1232.84 Fuga deserunt $1232.84 rerum atque vero soluta error illo, mollitia hic necessitatibus harum 33125 ipsam veniam! Placeat cumque tempore voluptatibus velit quo quasi dolores.";
+        let reg = /\$\d*\.\d{1,2}/g;
+        let result = myStr.match(reg);
+        console.log(result);
+      }
+      findPrice();
+
+      function findData() {
+        let myStr =
+          "Lorem ipsum dolor sit amet  30/12/2016 consectetur 555 adipisicing elit. 30/12/2016 Fuga deserunt 48961 rerum atque vero soluta error illo, mollitia hic necessitatibus harum 30/2/2012 ipsam veniam! Placeat cumque tempore 30/2/12 voluptatibus velit quo quasi dolores.";
+        let reg = /\d{1,2}\/\d{1,2}\/\d{4}/g;
+        let result = myStr.match(reg);
+        console.log(result);
+      }
+      findData();
+    </script>
+  </body>
+</html>
