@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Id and classes</title>
+    <style>
+        #id1 {
+            color: red;
+        }
+        div.class1 {
+            color: blue;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="id1">Title</h1>
+    <div class="class1" >
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla consequuntur, obcaecati recusandae enim laboriosam eaque, sint incidunt. Perferendis mollitia incidunt blanditiis eveniet, fuga sapiente. Magni dicta maxime fugiat sint soluta?        
+    </div>
+
+    <script>
+        let hOne = document.querySelector("#id1")
+        let dive = document.querySelector("div.class1")
+        // console.log(getComputedStyle(divOne))
+        console.log()
+        
+        
+        
+        document.body.style.backgroundColor = "#1f1f1f"
+        hOne.style.color = "yellow"
+        dive.style.cssText = "color: black; font-size: 36px; text-decoration: none"
+        // divOne.style.cssText = "display:block"
+        
+        dive.classList.add("newClass")
+        let divOne = document.querySelector(".newClass")  
+        console.log(dive.style.cssText)
+        console.log(divOne.style.cssText)
+        // console.log(getComputedStyle(divOne))
+        // console.log(dive.style.cssText)
+        // let divOne = document.getElementsByClassName("newClass")  
+        // console.log(getComputedStyle(divOnet))
+
+    </script>
+</body>
+</html>

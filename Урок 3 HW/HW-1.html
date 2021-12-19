@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000;
+      }
+      .screen {
+        width: 500px;
+        height: 40px;
+        background-color: #1f1f1f;
+        border-radius: 20px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        padding: 5px;
+      }
+      .buttons {
+        width: 100%;
+        max-width: 500px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+      input {
+        background-color: inherit;
+        border: 2px solid #ffd000;
+        color: white;
+        border-radius: 5px;
+        padding: 10px;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Создайте счетчик секунд, который начинает отчет с 1 и заканчивается на 30,
+также добавьте кнопки которые останавливают отчет, и запускают его заново и добавьте кнопку
+обнуляющую отcчет. Также попробуйте изменить код так чтобы отсчет начинался с 30 и заканчивался на 1. -->
+    <div class="timer">
+      <div class="screen">---</div>
+      <div class="buttons">
+        <input type="button" value="start" name="start" />
+        <input type="button" value="pause" name="pause" />
+        <input type="button" value="continue" name="continue" />
+        <input type="button" value="clean" name="clean" />
+        <input type="button" value="revers" name="revers" />
+      </div>
+    </div>
+    <script src="HW-1.js"></script>
+  </body>
+</html>
