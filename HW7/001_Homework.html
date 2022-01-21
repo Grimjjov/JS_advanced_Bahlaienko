@@ -1,0 +1,27 @@
+<!-- Создайте функцию, которая возвращает день недели для даты.
+День нужно возвратить в формате - понедельник имеет номер 1, вторник номер 2, …, воскресенье - номер 7. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <button id="btn">Press ME and look to console</button>
+    <script type="text/javascript">
+      window.onload = function () {
+        const btn = document.querySelector("#btn");
+
+        btn.addEventListener("click", showData);
+
+        function showData() {
+          let data = new Date();
+          let dayWeek = [7, 1, 2, 3, 4, 5, 6];
+
+          let dateNow = dayWeek[data.getDay()];
+          console.log("Сегодня день недели : " + dateNow);
+        }
+      };
+    </script>
+  </body>
+</html>

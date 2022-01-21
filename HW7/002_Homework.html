@@ -1,0 +1,85 @@
+<!-- Реализуйте последние 2 слайда в презентации с помощью пройденого на уроке материала -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.onload = function () {
+        class Man {
+          constructor(walk, eat, drink) {
+            this.walk = walk;
+            this.eat = eat;
+            this.dirnk = drink;
+          }
+          showActions() {
+            return `(Inheritance)This man can do this: ${this.walk}, ${this.eat}, ${this.dirnk} <br />`;
+          }
+        }
+
+        class Soldier extends Man {
+          constructor(walk, eat, drink, shoot) {
+            super(walk, eat, drink);
+            this.shoot = shoot;
+          }
+          showActions() {
+            return `(Inheritance)This solder can do this: ${this.walk}, ${this.eat}, ${this.dirnk},${this.shoot} <br />`;
+          }
+        }
+        class Doctor extends Man {
+          constructor(walk, eat, drink, cure) {
+            super(walk, eat, drink);
+            this.cure = cure;
+          }
+          showActions() {
+            return `(Inheritance)This doctor can do this: ${this.walk}, ${this.eat}, ${this.dirnk},${this.cure} <br />`;
+          }
+        }
+
+        let man = new Man("walk", "eat", "drink");
+        let soldier = new Soldier("walk", "eat", "drink", "shoot");
+        let doctor = new Doctor("walk", "eat", "drink", "cure");
+        document.write(man.showActions());
+        document.write(soldier.showActions());
+        document.write(doctor.showActions());
+        //////////////////////////////////////////////////////////////////////
+
+        function Doc(cure) {
+          this.cure = cure;
+        }
+        function Pediatrician(name, walk, eat, drink) {
+          this.name = name;
+          this.walk = walk;
+          this.eat = eat;
+          this.drink = drink;
+          this.showInfo = function () {
+            document.write(
+              `This  ${this.name} can do it: ${this.cure}, ${this.walk}, ${this.eat}, ${this.drink} <br />`
+            );
+          };
+        }
+        Pediatrician.prototype = new Doc("heal");
+        let doc1 = new Pediatrician("Pediatrician", "walk", "eat", "drink");
+        doc1.showInfo();
+
+        Pediatrician.prototype = new Doc("treat teeth");
+        let doc2 = new Pediatrician("Dentist", "walk", "eat", "drink");
+        doc2.showInfo();
+
+        Pediatrician.prototype = new Doc("perform operation");
+        let doc3 = new Pediatrician("Sergeon", "walk", "eat", "drink");
+        doc3.showInfo();
+
+        // function Dentist(name, cure) {
+        //   this.name = name;
+        //   this.cure = cure;
+        //   this.showInfo = function () {
+        //     document.write("This" + this.name + "can do it: " + this.cure);
+        //   };
+        // }
+      };
+    </script>
+  </body>
+</html>

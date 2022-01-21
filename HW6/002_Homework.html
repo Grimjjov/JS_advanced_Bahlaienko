@@ -1,0 +1,92 @@
+<!-- Переделайте примерм 013 через работу атрибутов / addEvemtListener().
+ Попробуйте варианты с рефакторингом -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Пример проверки достоверности ввода</title>
+
+    <style type="text/css">
+      input.invalid {
+        background-color: Pink;
+      }
+
+      input.valid {
+        background-color: LightGreen;
+      }
+    </style>
+  </head>
+  <body>
+    <form name="form1">
+      Name:
+      <input type="text" name="userName" /><br />
+      email:
+      <input type="text" name="email" /><br />
+      zipcode:
+      <input type="text" name="zip" /><br />
+      <input type="submit" />
+    </form>
+
+
+    
+    <script type="text/javascript">
+      window.onload = function () {
+        const userName = document.querySelector('input[name="userName"]');
+        const email = document.querySelector('input[name="email"]');
+        const zip = document.querySelector('input[name="zip"]');
+        const submit = document.querySelector('input[type="submit"]');
+
+        userName.addEventListener("change", nameOnChange);
+        email.addEventListener("change", emailOnChange);
+        zip.addEventListener("change", zipcodeOnChange);
+        submit.addEventListener("click", onsubmitHandler);
+
+        // метод проверки значения в элементе по регулярному выражению.
+        function validate(elem, pattern) {
+          var res = pattern.test(elem.value);
+          if (res === false) {
+            elem.className = "invalid";
+          } // установка CSS класса
+          else {
+            elem.className = "valid";
+          }
+        }
+
+        // обработчики событий изменения текста в окне.
+        function nameOnChange() {
+          var pattern = /\S/;
+          validate(this, pattern);
+        }
+
+        function emailOnChange() {
+          var pattern = /\b[a-z0-9._]+@[a-z0-9.-]+\.[a-z]{2,4}\b/i;
+          validate(this, pattern);
+        }
+
+        function zipcodeOnChange() {
+          var pattern = /\d{5}/;
+          validate(this, pattern);
+        }
+
+        // событие при отправке формы на сервер.
+        function onsubmitHandler(event) {
+          var invalid = false;
+          for (var i = 0; i < form1.elements.length; ++i) {
+            var elem = form1.elements[i];
+            if (form1.elements[i].type === "text") {
+              if (elem.className == "invalid" || elem.value == "") {
+                elem.className = "invalid";
+                invalid = true;
+              }
+            }
+          }
+          if (invalid) {
+            alert("Допущены ошибки при заполнении формы.");
+            event.preventDefault();
+            return false; // отмена отправки формы.
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

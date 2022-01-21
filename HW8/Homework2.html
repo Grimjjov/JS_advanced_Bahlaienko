@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <script></script>
+
+    <!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу,
+    которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему"
+    а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+    <p id="text"></p>
+    <button id="btn">Exit</button>
+
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        let text = document.querySelector("#text");
+        let btn = document.querySelector("#btn");
+
+        let result = prompt("Введите логин");
+
+        function start() {
+          localStorage.setItem("login", result);
+          let myValue = localStorage.getItem("login");
+          console.log(myValue);
+
+          if (myValue === "admin" || myValue === "Admin") {
+            text.innerHTML = `Пользоваетль ${myValue} вошел в систему`;
+          } else {
+            localStorage.removeItem("login");
+            alert("попробуй еще раз");
+            window.location.reload("login");
+          }
+          btn.addEventListener("click", () => {
+            localStorage.removeItem("login");
+            alert("вы вышли из системы");
+            window.location.reload();
+          });
+        }
+
+        start();
+      });
+    </script>
+  </body>
+</html>

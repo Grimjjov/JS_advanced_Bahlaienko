@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HomeWork</title>
+    <style>
+      .drag {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #1f1f1f;
+        left: 10px;
+        top: 10px;
+      }
+      .boxbox {
+        width: 100%;
+        height: 200px;
+        top: 50vh;
+        position: relative;
+      }
+      .myBox {
+        position: relative;
+        width: 50px;
+        height: 40px;
+        background-color: red;
+      }
+      .myBtn {
+        margin-top: 50px;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+	1. drag and drop;
+	2. создайте div, при клике на него, div начинает двигаться вправо, при клике на кнопку - останавливается,
+	при попадании div к краю окна, он переходит к началу окна.
+	-->
+
+    <div class="drag" draggable="true"></div>
+    <section class="boxbox">
+      <div class="myBox"></div>
+      <button class="myBtn">Stop</button>
+    </section>
+
+    <script type="text/javascript">
+      window.onload = function () {
+        const ball = document.querySelector(".drag");
+
+        ball.onmousedown = function (event) {
+          ball.style.position = "absolute";
+          ball.style.zIndex = 1000;
+
+          moveAt(event.pageX, event.pageY);
+
+          function moveAt(pageX, pageY) {
+            ball.style.left = pageX - ball.offsetWidth / 2 + "px";
+            ball.style.top = pageY - ball.offsetHeight / 2 + "px";
+          }
+
+          function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+          }
+
+          document.addEventListener("mousemove", onMouseMove);
+
+          ball.onmouseup = function () {
+            document.removeEventListener("mousemove", onMouseMove);
+            ball.onmouseup = null;
+          };
+        };
+        ball.ondragstart = function () {
+          return false;
+        };
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        const box = document.querySelector(".boxbox");
+        let myBox = document.querySelector(".myBox");
+        let myBtn = document.querySelector(".myBtn");
+        let startInt;
+
+        // const stop = document.querySelector(".btn");
+
+        box.addEventListener("click", moveBox);
+        myBtn.addEventListener("click", stopInt);
+        // myBtn.addEventListener("click", del);
+        // stop.addEventListener("click", removeMoveBox);
+
+        // function del() {
+        //   box.removeEventListener("click", moveBox);
+        // }
+
+        function stopInt(e) {
+          clearInterval(startInt);
+        }
+
+        function moveBox(e) {
+          let boxMove = e.target;
+
+          if (boxMove.tagName === "SECTION") {
+            return;
+          }
+
+          if (boxMove.tagName === "DIV") {
+            let pos = 1;
+
+            startInt = setInterval(start, 1);
+
+            boxMove.addEventListener("click", stopInterval);
+
+            function stopInterval(e) {
+              if (startInt) {
+                clearInterval(startInt);
+              }
+            }
+            // if (box.removeEventListener("click", moveBox)) {
+            //   clearInterval(startInt);
+            // }
+
+            function start() {
+              boxMove.style.left = pos + "px";
+              pos++;
+              if (pos >= window.innerWidth - boxMove.offsetWidth - 8) {
+                pos = 1;
+              }
+            }
+          }
+          // if (boxMove.tagName === "BUTTON") {
+          //   console.log("asd");
+          //   boxMove.addEventListener("click", function () {
+          //     clearInterval(startInt);
+          //   });
+          // }
+        }
+
+        // function removeMoveBox(e) {
+        //   box.removeEventListener("click", moveBox);
+
+        //   let a = box.style.left;
+        // }
+      };
+    </script>
+  </body>
+</html>

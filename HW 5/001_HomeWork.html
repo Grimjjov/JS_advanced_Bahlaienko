@@ -1,0 +1,60 @@
+<!--
+Создайте ссылку и див с текстом внутри, который изначально при загрузке страницы будет скрыт.
+При клике на ссылку див появляется, если повторно нажать ссылку див и текст должны пропасть.
+Также создайте кнопку, которая будет отменять выполнение обработчика клика по ссылке.
+ -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+    <style>
+      #link {
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        border: 2px solid red;
+        margin-right: 30px;
+      }
+      #link-two {
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        border: 2px solid purple;
+      }
+      .text {
+        visibility: hidden;
+        border: 1px solid black;
+      }
+      .text-show {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <a id="link" href="#"> Нажми меня </a>
+    <a id="link-two" href="#"> Я все отменю </a>
+    <div id="text" class="text">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum sapiente
+      assumenda necessitatibus saepe cumque voluptatem corrupti culpa similique
+      sed quibusdam libero quos iste omnis magnam repellendus, eos sequi harum
+      nam.
+    </div>
+    <script type="text/javascript">
+      window.onload = function () {
+        let link = document.getElementById("link");
+        let linkTwo = document.getElementById("link-two");
+        let text = document.getElementById("text");
+
+        link.addEventListener("click", evetToggle);
+        function evetToggle() {
+          text.classList.toggle("text-show");
+        }
+
+        linkTwo.addEventListener("click", removeEventBtn);
+        function removeEventBtn() {
+          link.removeEventListener("click", evetToggle);
+        }
+      };
+    </script>
+  </body>
+</html>

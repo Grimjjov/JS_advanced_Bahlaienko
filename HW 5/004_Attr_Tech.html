@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      #main-div {
+        position: relative;
+        top: 50px;
+        left: 50px;
+      }
+      .span-info {
+        position: relative;
+        color: black;
+        font-size: 36px;
+      }
+
+      .span-info__menu::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        top: 40px;
+        border-radius: 10px;
+        transition: all 1s ease;
+        background: rgb(0, 66, 141);
+        padding: 0 1px;
+        color: rgb(60, 255, 0);
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        const main = document.querySelector("#main-div");
+
+        main.addEventListener("mouseover", bubleWindow);
+        main.addEventListener("mouseout", bubleWindow);
+
+        function bubleWindow(e) {
+          let element = e.target;
+
+          if (element.tagName !== "SPAN") {
+            return;
+          }
+
+          element.classList.toggle("span-info__menu");
+
+          if (event.type == "mouseout") {
+            element.classList.remove("span-info__menu");
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="main-div">
+      <span class="span-info" data-tooltip="наведите">наведите</span>
+      <span class="span-info" data-tooltip="для">для</span>
+      <span class="span-info" data-tooltip="подсказки">подсказки</span>
+    </div>
+  </body>
+</html>

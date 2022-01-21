@@ -1,0 +1,70 @@
+<!--
+    1. Создайте 5 блоков с текстом. Добавьте в каждый из блоков кнопку для его удаления.
+    Используйте только один обработчик.
+
+    2. Доработайте пример 004_Attr_Tech.html таким образом, чтобы при наведении на span элементы,
+    подсказка сплыва под ними, а не в модальном окне. Используйте addEventListener -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <p class="text" id="text">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti fuga
+        inventore error numquam similique facere magni repellendus cumque,
+        blanditiis consectetur repellat enim vitae quisquam ea ipsum officiis
+        rerum, quia sit?
+        <a class="btn" id="btn" href="#">Delete1</a>
+      </p>
+      <p class="text" id="text">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti fuga
+        inventore error numquam similique facere magni repellendus cumque,
+        blanditiis consectetur repellat enim vitae quisquam ea ipsum officiis
+        rerum, quia sit?
+        <a class="btn" id="btn" href="#">Delete2</a>
+      </p>
+      <p class="text" id="text">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti fuga
+        inventore error numquam similique facere magni repellendus cumque,
+        blanditiis consectetur repellat enim vitae quisquam ea ipsum officiis
+        rerum, quia sit?
+        <a class="btn" id="btn" href="#">Delete3</a>
+      </p>
+      <p class="text" id="text">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti fuga
+        inventore error numquam similique facere magni repellendus cumque,
+        blanditiis consectetur repellat enim vitae quisquam ea ipsum officiis
+        rerum, quia sit?
+        <a class="btn" id="btn" href="#">Delete4</a>
+      </p>
+      <p class="text" id="text">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti fuga
+        inventore error numquam similique facere magni repellendus cumque,
+        blanditiis consectetur repellat enim vitae quisquam ea ipsum officiis
+        rerum, quia sit?
+        <a class="btn" id="btn" href="#">Delete5</a>
+      </p>
+    </div>
+    <script type="text/javascript">
+      window.onload = function () {
+        const wrap = document.getElementById("wrap");
+
+        wrap.addEventListener("click", deleteText);
+
+        function deleteText(e) {
+          let element = e.target;
+          if (element.tagName !== "A") {
+            return;
+          }
+
+          wrap.removeChild(element.parentNode);
+          e.preventDefault();
+          return false;
+        }
+      };
+    </script>
+  </body>
+</html>
