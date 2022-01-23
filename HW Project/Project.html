@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        background-image: url("83929.jpg");
+        background-repeat: no-repeat;
+        background-position: top center;
+        object-fit: cover;
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        list-style: none;
+      }
+
+      .fooo {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        top: 0;
+        left: 0;
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.8s ease-in-out 0s;
+      }
+      .fooo.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      .fooo.show .wrap {
+        transform: perspective(600px) translate(0px, 0%) rotate(0deg);
+        opacity: 1;
+      }
+      .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%;
+        position: relative;
+        transition: all 0.8s ease-in-out 0s;
+        opacity: 0;
+        transform: perspective(600px) translate(0px, -100%) rotate(45deg);
+      }
+      .popup__close {
+        top: 180px;
+        position: absolute;
+        font-size: 32px;
+        text-decoration: none;
+        border: 2px #fff solid;
+        border-radius: 50%;
+        padding: 1px 9px;
+        color: #fff;
+        transform: scale(1);
+        transition: transform 0.2s ease-in-out;
+      }
+      .popup__close:hover {
+        transform: scale(1.2);
+      }
+      .popup__close:active {
+        transform: scale(1.5);
+      }
+      #table {
+        border: 2px solid black;
+        min-height: 500px;
+        min-width: 480px;
+        width: 100%;
+        height: 100%;
+        background-color: #222222;
+        color: #fff;
+        z-index: 100;
+      }
+      .container {
+        position: relative;
+        width: 44%;
+        color: #fff;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 30px;
+        transition: 0.5s;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: background 0.8s ease-in-out 1s;
+        background: linear-gradient(-90deg, #27ff00, black, #ff0000);
+      }
+      .container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: background 0.8s ease-in-out 1s;
+        background: linear-gradient(-90deg, #27ff00, black, #ff0000);
+        filter: blur(30px);
+      }
+      tr {
+        min-height: 100px;
+      }
+      td,
+      th {
+        min-height: 30px;
+        max-width: 300px;
+        overflow: auto;
+        text-align: center;
+        font-size: 26px;
+        border-bottom: 2px solid #b495ff;
+      }
+      th:not(:last-child) {
+        border-right: 2px solid #b495ff;
+      }
+
+      th {
+        min-width: 200px;
+        width: 200px;
+        font-size: 36px;
+      }
+      #spec {
+        border-bottom: none;
+      }
+      #specValue {
+        border-bottom: none;
+      }
+
+      .slider__container {
+        display: flex;
+        align-items: center;
+        max-width: 500px;
+        margin: 10px;
+        position: relative;
+        height: 100vh;
+      }
+      #list {
+        width: 100%;
+        height: 100%;
+        max-height: 515px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+      #nameChar {
+        min-height: 95px;
+        height: 100px;
+        font-size: 24px;
+        background-color: #1f1f1f;
+        color: wheat;
+        border-radius: 10px;
+        color: antiquewhite;
+        text-align: center;
+        list-style: none;
+        padding-top: 30px;
+        max-width: 315px;
+
+        cursor: pointer;
+      }
+      #nameChar:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      #nameChar:active {
+        background-color: #fde594;
+        color: black;
+      }
+      /* #nameChar:not(:last-child):not(:first-child) {
+        margin: 10px 0;
+      } */
+
+      .slider__arrows {
+        position: absolute;
+        width: 300px;
+        bottom: 130px;
+        left: 69px;
+        margin: 15px auto;
+        z-index: 99;
+      }
+
+      .slider__arrow {
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+        margin: 0 10px;
+        cursor: pointer;
+        z-index: 99;
+        padding: 10px;
+        background-color: #5c0000;
+        color: white;
+        border: none;
+        border-radius: 15px;
+      }
+      .slider__arrow:hover {
+        background-color: #cc7e7e;
+        color: rgb(0, 0, 0);
+      }
+      .slider__arrow:active {
+        background-color: #fc9999;
+        color: rgb(0, 0, 0);
+      }
+      .slider__arrow.dis-btn {
+        background-color: #424242;
+        color: rgb(0, 0, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider__container">
+      <ul id="list">
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+        <li id="nameChar"></li>
+      </ul>
+    </div>
+    <div class="slider__arrows">
+      <button class="slider__arrow" id="prev_slide">Назад</button>
+      <button class="slider__arrow" id="next_slide">Вперед</button>
+    </div>
+    <div class="fooo">
+      <div class="wrap">
+        <a class="popup__close" href="#">X</a>
+        <div class="container">
+          <span></span>
+          <table id="table">
+            <tr>
+              <th colspan="3" id="nameTable">Clean</th>
+            </tr>
+            <tr>
+              <th id="gender">Gender</th>
+              <td id="genderValue">Clean</td>
+            </tr>
+            <tr>
+              <th id="berth">Berth</th>
+              <td id="berthValue">Clean</td>
+            </tr>
+            <tr>
+              <th id="planet">Planet</th>
+              <td id="planetValue">Clean</td>
+            </tr>
+            <tr>
+              <th id="films">Films</th>
+              <td id="filmsValue">
+                <ul>
+                  <li>Clean</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th id="spec">Spec</th>
+              <td id="specValue">Clean</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      window.onload = function () {
+        var btnPrev = document.querySelector("#prev_slide");
+        var btnNext = document.querySelector("#next_slide");
+
+        var hopDistance = 545;
+
+        btnPrev.addEventListener("click", function () {
+          list.scrollTop = list.scrollTop - hopDistance;
+          btnPrev.setAttribute("disabled", "disabled");
+          btnNext.removeAttribute("disabled", "disabled");
+          btnNext.classList.toggle("dis-btn");
+          btnPrev.classList.toggle("dis-btn");
+        });
+
+        btnNext.addEventListener("click", function () {
+          list.scrollTop = list.scrollTop + hopDistance;
+          btnNext.setAttribute("disabled", "disabled");
+          btnNext.classList.toggle("dis-btn");
+          btnPrev.classList.toggle("dis-btn");
+          btnPrev.removeAttribute("disabled", "disabled");
+        });
+
+        let popClose = document.querySelector(".popup__close");
+        let body = document.querySelector("body");
+        let unlock = true;
+
+        popClose.addEventListener("click", function () {
+          fooo.classList.toggle("show");
+        });
+
+        let list = document.querySelector("#list");
+        let nameChar = document.querySelectorAll("#nameChar");
+        let url = "https://swapi.dev/api/people/";
+        let init = {
+          method: "GET",
+        };
+        let nameTable = document.querySelector("#nameTable");
+        let genderValue = document.querySelector("#genderValue");
+        let berthValue = document.querySelector("#berthValue");
+        let planetValue = document.querySelector("#planetValue");
+        let filmsValue = document.querySelector("#filmsValue");
+        let specValue = document.querySelector("#specValue");
+        let fooo = document.querySelector(".fooo");
+
+        function btn() {
+          if (list.scrollTop == 0) {
+            btnPrev.setAttribute("disabled", "disabled");
+            btnPrev.classList.toggle("dis-btn");
+          }
+        }
+        btn();
+        function findEl(nameArr) {
+          list.addEventListener("click", function showInfo(e) {
+            let target = e.target;
+
+            if (target.tagName !== "LI") {
+              return;
+            }
+            fooo.classList.toggle("show");
+
+            for (i = 0; i < nameArr.length; i++) {
+              if (target.getAttribute("name") === nameArr[i].name) {
+                nameTable.innerHTML = nameArr[i].name;
+                genderValue.innerHTML = nameArr[i].gender;
+                berthValue.innerHTML = nameArr[i].birth_year;
+                planetValue.innerHTML = "";
+                filmsValue.innerHTML = "";
+                specValue.innerHTML = "";
+
+                function takePlanet() {
+                  var url = nameArr[i].homeworld;
+                  var init = {
+                    method: "GET",
+                  };
+
+                  fetch(url, init)
+                    .then(function (resp) {
+                      return resp.json();
+                    })
+                    .then(function (data) {
+                      let as = data.name;
+
+                      planetValue.innerHTML = as;
+                    })
+                    .catch(function (err) {
+                      console.error(err);
+                    });
+                }
+                takePlanet();
+
+                for (j = 0; j < nameArr[i].films.length; j++) {
+                  var url = nameArr[i].films[j];
+                  var init = {
+                    method: "GET",
+                  };
+
+                  fetch(url, init)
+                    .then(function (resp) {
+                      return resp.json();
+                    })
+                    .then(function (data) {
+                      let as = data.title;
+                      filmsValue.insertAdjacentHTML(
+                        "beforeEnd",
+                        `<li>${as}</li>`
+                      );
+                    })
+                    .catch(function (err) {
+                      console.error(err);
+                    });
+                }
+
+                // проверка на наличие nameArr[i].species
+                if (nameArr[i].species.length == 0) {
+                  specValue.innerHTML = "no have";
+                } else {
+                  let url = nameArr[i].species;
+                  let init = {
+                    method: "GET",
+                  };
+                  console.log(url);
+                  fetch(url, init)
+                    .then(function (resp) {
+                      return resp.json();
+                    })
+                    .then(function (data) {
+                      let as = data.name;
+                      console.log(as);
+                      specValue.innerHTML = as;
+                    })
+                    .catch(function (err) {
+                      console.error(err);
+                    });
+                }
+              }
+            }
+          });
+        }
+
+        fetch(url, init)
+          .then(function (resp) {
+            return resp.json();
+          })
+          .then(function (data) {
+            let fullArray = data.results;
+            findEl(fullArray);
+            onlist(fullArray);
+
+            /////////////////////////////////////////////////////////
+          })
+          .catch(function (err) {
+            console.error(err);
+          });
+
+        function onlist(nameArr) {
+          for (i = 0; i < nameArr.length; i++) {
+            nameChar[i].innerHTML = nameArr[i].name;
+            nameChar[i].setAttribute("name", nameArr[i].name);
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
